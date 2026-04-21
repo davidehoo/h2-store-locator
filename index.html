@@ -15,7 +15,6 @@
       --light:  #f7f7f7;
       --mid:    #e8e8e8;
       --muted:  #888888;
-      --btn-h:  56px;
       --safe-b: env(safe-area-inset-bottom, 0px);
     }
 
@@ -26,8 +25,7 @@
       background: var(--white);
       color: var(--black);
       min-height: 100vh;
-      /* room for sticky button + safe area */
-      padding-bottom: calc(var(--btn-h) + 24px + var(--safe-b));
+      padding-bottom: calc(20px + var(--safe-b));
     }
 
     /* ── HEADER ──────────────────────────────────── */
@@ -68,37 +66,123 @@
       text-transform: uppercase;
       text-decoration: none;
       -webkit-tap-highlight-color: transparent;
-      transition: border-color 0.15s;
     }
 
-    #website-btn:active {
-      background: var(--light);
-      border-color: var(--black);
-    }
+    #website-btn:active { background: var(--light); border-color: var(--black); }
 
     /* ── MAIN ────────────────────────────────────── */
     main {
       max-width: 600px;
       margin: 0 auto;
-      padding: 24px 16px 16px;
+      padding: 28px 16px 16px;
+    }
+
+    /* ── CHOICE SCREEN ───────────────────────────── */
+    #choice-screen {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .choice-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      padding: 22px 20px;
+      border: 1px solid var(--black);
+      background: var(--white);
+      text-align: left;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s;
+    }
+
+    .choice-btn:active { background: var(--light); }
+
+    .choice-btn.primary {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+
+    .choice-btn.primary:active { background: #333; }
+
+    .choice-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .choice-btn.primary .choice-icon {
+      background: rgba(255,255,255,0.12);
+    }
+
+    .choice-btn.secondary .choice-icon {
+      background: var(--light);
+    }
+
+    .choice-text-wrap { flex: 1; }
+
+    .choice-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
+    }
+
+    .choice-sub {
+      font-size: 12px;
+      opacity: 0.6;
+      letter-spacing: 0.2px;
+    }
+
+    .choice-btn.primary .choice-sub { opacity: 0.55; }
+
+    .choice-arrow {
+      flex-shrink: 0;
+      opacity: 0.4;
     }
 
     /* ── STATUS ──────────────────────────────────── */
     #status {
+      margin-top: 14px;
       font-size: 12px;
-      letter-spacing: 0.4px;
       color: var(--muted);
       text-align: center;
       min-height: 18px;
-      padding: 0 8px;
     }
 
     #status.error { color: var(--red); }
 
+    /* ── BACK LINK ───────────────────────────────── */
+    #back-btn {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+      background: none;
+      border: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 8px 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #back-btn:active { color: var(--black); }
+
     /* ── CLOSEST CARD ────────────────────────────── */
     #closest-card {
       display: none;
-      margin-top: 20px;
+      margin-bottom: 28px;
       border: 1px solid var(--black);
       padding: 22px 18px 20px;
     }
@@ -144,10 +228,7 @@
     }
 
     /* ── NAV BUTTONS ─────────────────────────────── */
-    .map-buttons {
-      display: flex;
-      gap: 10px;
-    }
+    .map-buttons { display: flex; gap: 10px; }
 
     .map-btn {
       flex: 1;
@@ -164,11 +245,9 @@
       cursor: pointer;
       text-decoration: none;
       -webkit-tap-highlight-color: transparent;
-      transition: opacity 0.15s;
     }
 
     .map-btn:active { opacity: 0.7; }
-
     .map-btn.google { background: var(--black); color: var(--white); }
     .map-btn.apple  { background: var(--white); color: var(--black); border: 1px solid var(--black); }
 
@@ -177,7 +256,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      margin: 28px 0 16px;
+      margin: 0 0 16px;
     }
 
     .divider span {
@@ -189,8 +268,7 @@
       white-space: nowrap;
     }
 
-    .divider::before,
-    .divider::after {
+    .divider::before, .divider::after {
       content: "";
       flex: 1;
       height: 1px;
@@ -199,6 +277,8 @@
 
     /* ── STORE LIST ──────────────────────────────── */
     #store-list { display: flex; flex-direction: column; }
+
+    #store-list-wrap { display: none; }
 
     .store-item {
       display: flex;
@@ -255,54 +335,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      /* 44px touch target */
       width: 44px;
       height: 44px;
       border: 1px solid var(--mid);
       text-decoration: none;
       color: var(--black);
       -webkit-tap-highlight-color: transparent;
-      transition: border-color 0.15s;
     }
 
-    .mini-map-btn:active {
-      background: var(--light);
-      border-color: var(--black);
-    }
-
-    /* ── STICKY LOCATE BUTTON ────────────────────── */
-    #locate-wrap {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 12px 16px calc(12px + var(--safe-b));
-      background: var(--white);
-      border-top: 1px solid var(--mid);
-      z-index: 100;
-    }
-
-    #locate-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      height: var(--btn-h);
-      background: var(--black);
-      color: var(--white);
-      border: none;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      transition: background 0.15s;
-    }
-
-    #locate-btn:active  { background: #333; }
-    #locate-btn:disabled { background: #aaa; cursor: default; }
+    .mini-map-btn:active { background: var(--light); border-color: var(--black); }
 
     /* ── SPINNER ─────────────────────────────────── */
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -333,7 +374,7 @@
 
 <header>
   <img src="h2logo.png" alt="H.2 Collection" />
-  <div class="tagline">Trova il negozio più vicino</div>
+  <div class="tagline">Store Locator</div>
   <a id="website-btn" href="https://www.h2collection.it" target="_blank" rel="noopener">
     <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="10"/>
@@ -345,43 +386,82 @@
 
 <main>
 
-  <div id="status">Tocca il pulsante in basso per trovare il negozio più vicino.</div>
+  <!-- Landing choice -->
+  <div id="choice-screen">
+    <button class="choice-btn primary" onclick="startLocate()">
+      <div class="choice-icon">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
+          <circle cx="12" cy="12" r="8"/>
+        </svg>
+      </div>
+      <div class="choice-text-wrap">
+        <div class="choice-title">Negozio più vicino</div>
+        <div class="choice-sub">Usa la tua posizione</div>
+      </div>
+      <svg class="choice-arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
 
-  <div id="closest-card">
-    <div class="label">Il negozio più vicino a te</div>
-    <div class="store-name" id="card-city"></div>
-    <div class="store-address" id="card-address"></div>
-    <div class="distance" id="card-distance"></div>
-    <div id="store-map"></div>
-    <div class="map-buttons">
-      <a id="card-google" class="map-btn google" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/></svg>
-        Google Maps
-      </a>
-      <a id="card-apple" class="map-btn apple" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/></svg>
-        Apple Maps
-      </a>
-    </div>
+    <button class="choice-btn secondary" onclick="showAllStores()">
+      <div class="choice-icon">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <div class="choice-text-wrap">
+        <div class="choice-title">Tutti gli store</div>
+        <div class="choice-sub">Vedi tutti i negozi in Sicilia</div>
+      </div>
+      <svg class="choice-arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
   </div>
 
-  <div class="divider"><span>Tutti gli store</span></div>
-  <div id="store-list"></div>
+  <div id="status"></div>
+
+  <!-- Nearest store result -->
+  <div id="nearest-view" style="display:none">
+    <button id="back-btn" onclick="showChoiceScreen()" style="display:flex">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      Indietro
+    </button>
+
+    <div id="closest-card">
+      <div class="label">Il negozio più vicino a te</div>
+      <div class="store-name" id="card-city"></div>
+      <div class="store-address" id="card-address"></div>
+      <div class="distance" id="card-distance"></div>
+      <div id="store-map"></div>
+      <div class="map-buttons">
+        <a id="card-google" class="map-btn google" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/></svg>
+          Google Maps
+        </a>
+        <a id="card-apple" class="map-btn apple" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/></svg>
+          Apple Maps
+        </a>
+      </div>
+    </div>
+
+    <div class="divider" style="margin-top:28px"><span>Altri store</span></div>
+    <div id="store-list"></div>
+  </div>
+
+  <!-- All stores view -->
+  <div id="all-stores-view" style="display:none">
+    <button id="back-btn-all" onclick="showChoiceScreen()" style="display:flex;align-items:center;gap:6px;margin-bottom:20px;background:none;border:none;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;padding:8px 0;-webkit-tap-highlight-color:transparent;">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      Indietro
+    </button>
+    <div class="divider"><span>Tutti gli store</span></div>
+    <div id="store-list-all"></div>
+  </div>
 
 </main>
 
 <footer>© H.2 Collection® — Sicilia</footer>
-
-<div id="locate-wrap">
-  <button id="locate-btn" onclick="locateUser()">
-    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="3"/>
-      <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
-      <circle cx="12" cy="12" r="8"/>
-    </svg>
-    Usa la mia posizione
-  </button>
-</div>
 
 <script>
   const STORES = [
@@ -437,60 +517,79 @@
     return km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
   }
 
-  const pinSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/></svg>`;
+  const pinSvg   = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/></svg>`;
   const appleSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.42c1.39.07 2.35.74 3.15.8 1.2-.24 2.35-.93 3.64-.84 1.54.12 2.7.71 3.44 1.8-3.18 1.94-2.43 5.86.48 6.95-.57 1.56-1.32 3.09-2.71 4.15zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>`;
 
-  function renderList(distances) {
+  function storeItemHtml(store, idx, showDist) {
+    const distHtml = showDist && store.dist !== null
+      ? `<div class="store-dist${store.dist < 10 ? " near" : ""}">${formatDist(store.dist)}</div>`
+      : "";
+    return `
+      <div class="store-item-left">
+        <div class="city">${store.city}</div>
+        <div class="addr">${store.address}</div>
+      </div>
+      <div class="store-item-right">
+        ${distHtml}
+        <div class="mini-btns">
+          <a class="mini-map-btn" href="${googleMapsUrl(store)}" target="_blank" rel="noopener" aria-label="Google Maps">${pinSvg}</a>
+          <a class="mini-map-btn" href="${appleMapsUrl(store)}" target="_blank" rel="noopener" aria-label="Apple Maps">${appleSvg}</a>
+        </div>
+      </div>`;
+  }
+
+  function renderNearestList(distances) {
     const list = document.getElementById("store-list");
     list.innerHTML = "";
-
-    const items = STORES.map((s, i) => ({ ...s, dist: distances ? distances[i] : null }));
-    if (distances) items.sort((a, b) => a.dist - b.dist);
-
-    items.forEach((store, idx) => {
+    const items = STORES.map((s, i) => ({ ...s, dist: distances[i] })).sort((a, b) => a.dist - b.dist);
+    items.slice(1).forEach((store, idx) => {
       const item = document.createElement("div");
-      item.className = "store-item" + (distances && idx === 0 ? " highlighted" : "");
-
-      const distHtml = store.dist !== null
-        ? `<div class="store-dist${store.dist < 10 ? " near" : ""}">${formatDist(store.dist)}</div>`
-        : "";
-
-      item.innerHTML = `
-        <div class="store-item-left">
-          <div class="city">${store.city}</div>
-          <div class="addr">${store.address}</div>
-        </div>
-        <div class="store-item-right">
-          ${distHtml}
-          <div class="mini-btns">
-            <a class="mini-map-btn" href="${googleMapsUrl(store)}" target="_blank" rel="noopener" aria-label="Google Maps">${pinSvg}</a>
-            <a class="mini-map-btn" href="${appleMapsUrl(store)}" target="_blank" rel="noopener" aria-label="Apple Maps">${appleSvg}</a>
-          </div>
-        </div>
-      `;
+      item.className = "store-item";
+      item.innerHTML = storeItemHtml(store, idx, true);
       list.appendChild(item);
     });
   }
 
-  function setBtnLoading(loading) {
-    const btn = document.getElementById("locate-btn");
-    btn.disabled = loading;
-    btn.innerHTML = loading
-      ? `<div class="spinner"></div> Rilevamento…`
-      : `<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-           <circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
-           <circle cx="12" cy="12" r="8"/>
-         </svg> Aggiorna posizione`;
+  function renderAllList() {
+    const list = document.getElementById("store-list-all");
+    list.innerHTML = "";
+    STORES.forEach((store, idx) => {
+      const item = document.createElement("div");
+      item.className = "store-item";
+      item.innerHTML = storeItemHtml(store, idx, false);
+      list.appendChild(item);
+    });
   }
 
-  function locateUser() {
+  function showChoiceScreen() {
+    document.getElementById("choice-screen").style.display = "flex";
+    document.getElementById("nearest-view").style.display = "none";
+    document.getElementById("all-stores-view").style.display = "none";
+    document.getElementById("status").textContent = "";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function showAllStores() {
+    document.getElementById("choice-screen").style.display = "none";
+    document.getElementById("nearest-view").style.display = "none";
+    document.getElementById("all-stores-view").style.display = "block";
+    renderAllList();
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+
+  function startLocate() {
     if (!navigator.geolocation) {
       setStatus("Il tuo browser non supporta la geolocalizzazione.", true);
       return;
     }
 
-    setBtnLoading(true);
-    setStatus("");
+    document.getElementById("choice-screen").style.display = "none";
+    document.getElementById("nearest-view").style.display = "block";
+    document.getElementById("closest-card").style.display = "none";
+    document.getElementById("store-map").style.display = "none";
+
+    setStatus("Rilevamento posizione in corso…");
+    window.scrollTo({ top: 0, behavior: "instant" });
 
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
@@ -503,16 +602,11 @@
         document.getElementById("card-distance").textContent = `A ${formatDist(distances[minIdx])} da te`;
         document.getElementById("card-google").href = googleMapsUrl(closest);
         document.getElementById("card-apple").href = appleMapsUrl(closest);
-
-        const card = document.getElementById("closest-card");
-        card.style.display = "block";
+        document.getElementById("closest-card").style.display = "block";
 
         showMap(closest.lat, closest.lng, latitude, longitude);
-        renderList(distances);
-        setBtnLoading(false);
-
-        // scroll card into view with offset for sticky button
-        setTimeout(() => card.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+        renderNearestList(distances);
+        setStatus("");
       },
       (err) => {
         const msgs = {
@@ -521,7 +615,6 @@
           3: "Richiesta scaduta. Riprova.",
         };
         setStatus(msgs[err.code] || "Impossibile ottenere la posizione.", true);
-        setBtnLoading(false);
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
@@ -532,8 +625,6 @@
     el.textContent = msg;
     el.className = isError ? "error" : "";
   }
-
-  renderList(null);
 </script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -546,7 +637,7 @@
 
     if (leafletMap) { leafletMap.remove(); leafletMap = null; }
 
-    leafletMap = L.map("store-map", { zoomControl: false, scrollWheelZoom: false, dragging: true });
+    leafletMap = L.map("store-map", { zoomControl: false, scrollWheelZoom: false });
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
