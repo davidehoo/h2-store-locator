@@ -15,76 +15,82 @@
       --light:  #f7f7f7;
       --mid:    #e8e8e8;
       --muted:  #888888;
+      --btn-h:  56px;
+      --safe-b: env(safe-area-inset-bottom, 0px);
     }
+
+    html { -webkit-text-size-adjust: 100%; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
       background: var(--white);
       color: var(--black);
       min-height: 100vh;
+      /* room for sticky button + safe area */
+      padding-bottom: calc(var(--btn-h) + 24px + var(--safe-b));
     }
 
-    /* ── HEADER ─────────────────────────────────── */
+    /* ── HEADER ──────────────────────────────────── */
     header {
       background: var(--white);
       border-bottom: 1px solid var(--mid);
-      padding: 24px 20px 20px;
+      padding: 20px 16px 16px;
       text-align: center;
     }
 
     header img {
-      height: 52px;
+      height: 44px;
       width: auto;
       display: block;
-      margin: 0 auto 14px;
+      margin: 0 auto 10px;
     }
 
     header .tagline {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    #website-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 20px;
+      border: 1px solid var(--mid);
+      background: var(--white);
+      color: var(--black);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 0.15s;
+    }
+
+    #website-btn:active {
+      background: var(--light);
+      border-color: var(--black);
     }
 
     /* ── MAIN ────────────────────────────────────── */
     main {
       max-width: 600px;
       margin: 0 auto;
-      padding: 32px 20px 60px;
+      padding: 24px 16px 16px;
     }
-
-    /* ── LOCATE BUTTON ───────────────────────────── */
-    #locate-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 16px 20px;
-      background: var(--black);
-      color: var(--white);
-      border: none;
-      border-radius: 0;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    #locate-btn:hover  { background: #222; }
-    #locate-btn:disabled { background: #999; cursor: default; }
 
     /* ── STATUS ──────────────────────────────────── */
     #status {
-      margin-top: 12px;
       font-size: 12px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       color: var(--muted);
       text-align: center;
       min-height: 18px;
+      padding: 0 8px;
     }
 
     #status.error { color: var(--red); }
@@ -92,9 +98,9 @@
     /* ── CLOSEST CARD ────────────────────────────── */
     #closest-card {
       display: none;
-      margin-top: 28px;
+      margin-top: 20px;
       border: 1px solid var(--black);
-      padding: 28px 24px;
+      padding: 22px 18px 20px;
     }
 
     #closest-card .label {
@@ -103,21 +109,21 @@
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--red);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     #closest-card .store-name {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 700;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
       margin-bottom: 4px;
+      line-height: 1.1;
     }
 
     #closest-card .store-address {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
-      letter-spacing: 0.3px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     #closest-card .distance {
@@ -126,9 +132,18 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--black);
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
 
+    /* ── MAP ─────────────────────────────────────── */
+    #store-map {
+      display: none;
+      margin-bottom: 16px;
+      height: 220px;
+      border: 1px solid var(--mid);
+    }
+
+    /* ── NAV BUTTONS ─────────────────────────────── */
     .map-buttons {
       display: flex;
       gap: 10px;
@@ -140,7 +155,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 13px 10px;
+      height: 48px;
       border: none;
       font-size: 10px;
       font-weight: 700;
@@ -148,28 +163,21 @@
       text-transform: uppercase;
       cursor: pointer;
       text-decoration: none;
-      transition: opacity 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.15s;
     }
 
-    .map-btn:hover { opacity: 0.8; }
+    .map-btn:active { opacity: 0.7; }
 
-    .map-btn.google {
-      background: var(--black);
-      color: var(--white);
-    }
-
-    .map-btn.apple {
-      background: var(--white);
-      color: var(--black);
-      border: 1px solid var(--black);
-    }
+    .map-btn.google { background: var(--black); color: var(--white); }
+    .map-btn.apple  { background: var(--white); color: var(--black); border: 1px solid var(--black); }
 
     /* ── DIVIDER ─────────────────────────────────── */
     .divider {
       display: flex;
       align-items: center;
       gap: 14px;
-      margin: 36px 0 20px;
+      margin: 28px 0 16px;
     }
 
     .divider span {
@@ -190,28 +198,24 @@
     }
 
     /* ── STORE LIST ──────────────────────────────── */
-    #store-list {
-      display: flex;
-      flex-direction: column;
-    }
+    #store-list { display: flex; flex-direction: column; }
 
     .store-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 0;
+      padding: 14px 0;
       border-bottom: 1px solid var(--mid);
-      transition: background 0.1s;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .store-item:first-child { border-top: 1px solid var(--mid); }
+    .store-item.highlighted .city { color: var(--red); }
 
-    .store-item.highlighted .city {
-      color: var(--red);
-    }
+    .store-item-left { flex: 1; min-width: 0; }
 
     .store-item-left .city {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       letter-spacing: 0.5px;
       text-transform: uppercase;
@@ -221,21 +225,23 @@
       font-size: 12px;
       color: var(--muted);
       margin-top: 2px;
-      letter-spacing: 0.2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .store-item-right {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 10px;
       flex-shrink: 0;
-      margin-left: 16px;
+      margin-left: 12px;
     }
 
     .store-dist {
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       color: var(--muted);
       white-space: nowrap;
@@ -243,64 +249,78 @@
 
     .store-dist.near { color: var(--red); }
 
-    .mini-btns {
-      display: flex;
-      gap: 6px;
-    }
+    .mini-btns { display: flex; gap: 6px; }
 
     .mini-map-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 30px;
-      height: 30px;
+      /* 44px touch target */
+      width: 44px;
+      height: 44px;
       border: 1px solid var(--mid);
       text-decoration: none;
-      font-size: 14px;
-      transition: border-color 0.15s, background 0.15s;
       color: var(--black);
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 0.15s;
     }
 
-    .mini-map-btn:hover {
-      border-color: var(--black);
+    .mini-map-btn:active {
       background: var(--light);
+      border-color: var(--black);
     }
 
-    /* ── WEBSITE BUTTON ─────────────────────────── */
-    #website-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      margin-top: 14px;
-      padding: 9px 18px;
-      border: 1px solid var(--mid);
+    /* ── STICKY LOCATE BUTTON ────────────────────── */
+    #locate-wrap {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 16px calc(12px + var(--safe-b));
       background: var(--white);
-      color: var(--black);
-      font-size: 10px;
+      border-top: 1px solid var(--mid);
+      z-index: 100;
+    }
+
+    #locate-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      height: var(--btn-h);
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      text-decoration: none;
-      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s;
     }
 
-    #website-btn:hover {
-      border-color: var(--black);
-      background: var(--light);
-    }
+    #locate-btn:active  { background: #333; }
+    #locate-btn:disabled { background: #aaa; cursor: default; }
 
-    /* ── MAP ─────────────────────────────────────── */
-    #store-map {
-      display: none;
-      margin-top: 20px;
-      height: 240px;
-      border: 1px solid var(--mid);
+    /* ── SPINNER ─────────────────────────────────── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
     }
 
     /* ── FOOTER ──────────────────────────────────── */
     footer {
       text-align: center;
-      padding: 24px 20px;
+      padding: 20px 16px;
       border-top: 1px solid var(--mid);
       font-size: 10px;
       letter-spacing: 1.5px;
@@ -316,7 +336,8 @@
   <div class="tagline">Trova il negozio più vicino</div>
   <a id="website-btn" href="https://www.h2collection.it" target="_blank" rel="noopener">
     <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
     </svg>
     Visita h2collection.it
   </a>
@@ -324,16 +345,7 @@
 
 <main>
 
-  <button id="locate-btn" onclick="locateUser()">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="3"/>
-      <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
-      <circle cx="12" cy="12" r="8"/>
-    </svg>
-    Usa la mia posizione
-  </button>
-
-  <div id="status">Attiva la geolocalizzazione per trovare lo store più vicino.</div>
+  <div id="status">Tocca il pulsante in basso per trovare il negozio più vicino.</div>
 
   <div id="closest-card">
     <div class="label">Il negozio più vicino a te</div>
@@ -359,6 +371,17 @@
 </main>
 
 <footer>© H.2 Collection® — Sicilia</footer>
+
+<div id="locate-wrap">
+  <button id="locate-btn" onclick="locateUser()">
+    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
+      <circle cx="12" cy="12" r="8"/>
+    </svg>
+    Usa la mia posizione
+  </button>
+</div>
 
 <script>
   const STORES = [
@@ -414,6 +437,9 @@
     return km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
   }
 
+  const pinSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/></svg>`;
+  const appleSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.42c1.39.07 2.35.74 3.15.8 1.2-.24 2.35-.93 3.64-.84 1.54.12 2.7.71 3.44 1.8-3.18 1.94-2.43 5.86.48 6.95-.57 1.56-1.32 3.09-2.71 4.15zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>`;
+
   function renderList(distances) {
     const list = document.getElementById("store-list");
     list.innerHTML = "";
@@ -437,17 +463,24 @@
         <div class="store-item-right">
           ${distHtml}
           <div class="mini-btns">
-            <a class="mini-map-btn" href="${googleMapsUrl(store)}" target="_blank" rel="noopener" title="Google Maps">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/></svg>
-            </a>
-            <a class="mini-map-btn" href="${appleMapsUrl(store)}" target="_blank" rel="noopener" title="Apple Maps">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.42c1.39.07 2.35.74 3.15.8 1.2-.24 2.35-.93 3.64-.84 1.54.12 2.7.71 3.44 1.8-3.18 1.94-2.43 5.86.48 6.95-.57 1.56-1.32 3.09-2.71 4.15zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-            </a>
+            <a class="mini-map-btn" href="${googleMapsUrl(store)}" target="_blank" rel="noopener" aria-label="Google Maps">${pinSvg}</a>
+            <a class="mini-map-btn" href="${appleMapsUrl(store)}" target="_blank" rel="noopener" aria-label="Apple Maps">${appleSvg}</a>
           </div>
         </div>
       `;
       list.appendChild(item);
     });
+  }
+
+  function setBtnLoading(loading) {
+    const btn = document.getElementById("locate-btn");
+    btn.disabled = loading;
+    btn.innerHTML = loading
+      ? `<div class="spinner"></div> Rilevamento…`
+      : `<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+           <circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
+           <circle cx="12" cy="12" r="8"/>
+         </svg> Aggiorna posizione`;
   }
 
   function locateUser() {
@@ -456,9 +489,8 @@
       return;
     }
 
-    const btn = document.getElementById("locate-btn");
-    btn.disabled = true;
-    setStatus("Rilevamento posizione in corso…");
+    setBtnLoading(true);
+    setStatus("");
 
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
@@ -471,29 +503,25 @@
         document.getElementById("card-distance").textContent = `A ${formatDist(distances[minIdx])} da te`;
         document.getElementById("card-google").href = googleMapsUrl(closest);
         document.getElementById("card-apple").href = appleMapsUrl(closest);
-        document.getElementById("closest-card").style.display = "block";
+
+        const card = document.getElementById("closest-card");
+        card.style.display = "block";
 
         showMap(closest.lat, closest.lng, latitude, longitude);
-
-        setStatus("");
         renderList(distances);
-        btn.disabled = false;
-        btn.innerHTML = `
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
-            <circle cx="12" cy="12" r="8"/>
-          </svg>
-          Aggiorna posizione`;
+        setBtnLoading(false);
+
+        // scroll card into view with offset for sticky button
+        setTimeout(() => card.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
       },
       (err) => {
         const msgs = {
-          1: "Permesso negato. Abilita la posizione nelle impostazioni del browser.",
+          1: "Permesso negato. Abilita la posizione nelle impostazioni.",
           2: "Posizione non disponibile. Riprova.",
           3: "Richiesta scaduta. Riprova.",
         };
         setStatus(msgs[err.code] || "Impossibile ottenere la posizione.", true);
-        btn.disabled = false;
+        setBtnLoading(false);
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
@@ -507,6 +535,7 @@
 
   renderList(null);
 </script>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
   let leafletMap = null;
@@ -515,12 +544,9 @@
     const mapEl = document.getElementById("store-map");
     mapEl.style.display = "block";
 
-    if (leafletMap) {
-      leafletMap.remove();
-      leafletMap = null;
-    }
+    if (leafletMap) { leafletMap.remove(); leafletMap = null; }
 
-    leafletMap = L.map("store-map", { zoomControl: true, scrollWheelZoom: false });
+    leafletMap = L.map("store-map", { zoomControl: false, scrollWheelZoom: false, dragging: true });
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -529,29 +555,29 @@
 
     const storeIcon = L.divIcon({
       className: "",
-      html: `<div style="width:14px;height:14px;background:#cc1a1a;border:2px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.4)"></div>`,
-      iconSize: [14, 14],
-      iconAnchor: [7, 7],
+      html: `<div style="width:16px;height:16px;background:#cc1a1a;border:2.5px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.35)"></div>`,
+      iconSize: [16, 16], iconAnchor: [8, 8],
     });
 
     const userIcon = L.divIcon({
       className: "",
-      html: `<div style="width:12px;height:12px;background:#0a0a0a;border:2px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.4)"></div>`,
-      iconSize: [12, 12],
-      iconAnchor: [6, 6],
+      html: `<div style="width:13px;height:13px;background:#0a0a0a;border:2.5px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.35)"></div>`,
+      iconSize: [13, 13], iconAnchor: [6, 6],
     });
 
     L.marker([storeLat, storeLng], { icon: storeIcon })
       .addTo(leafletMap)
-      .bindPopup("<b>H.2 Collection</b>")
+      .bindPopup("<b style='font-family:sans-serif;font-size:13px'>H.2 Collection</b>")
       .openPopup();
 
     L.marker([userLat, userLng], { icon: userIcon })
       .addTo(leafletMap)
-      .bindPopup("La tua posizione");
+      .bindPopup("<span style='font-family:sans-serif;font-size:13px'>La tua posizione</span>");
 
-    const bounds = L.latLngBounds([[storeLat, storeLng], [userLat, userLng]]);
-    leafletMap.fitBounds(bounds, { padding: [40, 40] });
+    leafletMap.fitBounds(
+      L.latLngBounds([[storeLat, storeLng], [userLat, userLng]]),
+      { padding: [36, 36] }
+    );
   }
 </script>
 
