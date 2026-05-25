@@ -350,10 +350,8 @@
     .store-hours {
       font-size: 11px;
       color: var(--muted);
-      margin-top: 3px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin-top: 4px;
+      line-height: 1.8;
     }
 
     .store-item-right {
@@ -575,6 +573,13 @@
     return "tel:" + phone.replace(/\s/g, "");
   }
 
+  function boldDay(segment) {
+    const t = segment.trim();
+    const m = t.match(/^([^\d]+)(\d.*)$/);
+    if (m) return `<strong>${m[1].trim()}</strong> ${m[2].trim()}`;
+    return `<strong>${t}</strong>`;
+  }
+
   function formatDist(km) {
     return km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
   }
@@ -587,12 +592,14 @@
     const distHtml = showDist && store.dist !== null
       ? `<div class="store-dist${store.dist < 10 ? " near" : ""}">${formatDist(store.dist)}</div>`
       : "";
-    const hoursCompact = store.hours ? store.hours.replace(/\s*\|\s*/g, " · ") : "";
+    const hoursHtml = store.hours
+      ? store.hours.split("|").map(boldDay).join("<br>")
+      : "";
     return `
       <div class="store-item-left">
         <div class="city">${store.city}</div>
         <div class="addr">${store.address}</div>
-        ${hoursCompact ? `<div class="store-hours">${hoursCompact}</div>` : ""}
+        ${hoursHtml ? `<div class="store-hours">${hoursHtml}</div>` : ""}
       </div>
       <div class="store-item-right">
         ${distHtml}
@@ -684,7 +691,7 @@
         if (closest.hours) {
           hoursEl.innerHTML = closest.hours
             .split("|")
-            .map(h => `<div class="hours-line">${h.trim()}</div>`)
+            .map(h => `<div class="hours-line">${boldDay(h)}</div>`)
             .join("");
           hoursWrap.style.display = "block";
         } else {
